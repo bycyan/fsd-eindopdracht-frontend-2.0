@@ -6,17 +6,20 @@
 import React from 'react';
 import ProfileContainer from '../../containers/ProfileContainer/ProfileContainer';
 import ListContainer from '../../containers/ListContainer/ListContainer';
+import {ImageComponent} from "../../componenets/PageComponents/ImageComponent/ImageComponent";
+import logo from "../../assets/soundwwise-logo.png";
 
 export default function ProfilePage(){
-    function showUserProjects(projectId) {
-        console.log('Showing specific list:', projectId);
-}
+    // function showListOfUserProjects(projectList) {
+    //     console.log('Showing specific list:', projectList);
+    // }
 
     return (
-        <>
-            <ProfileContainer />
-            <ListContainer projectList={showUserProjects} />
-        </>
+        <main>
+            <section>
+                <ProfileContainer />
+            </section>
+        </main>
 );
 }
 

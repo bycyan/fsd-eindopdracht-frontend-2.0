@@ -1,0 +1,12 @@
+button{
+    border: none;
+    background-color: var(--primary-color);
+    padding: 20px;
+    width: 300px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--secondary-color);
+    border-radius: var(--border-radius-large);
+    cursor: pointer;
+    font-family: var(--font-family);
+}
