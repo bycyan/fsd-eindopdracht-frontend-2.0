@@ -7,20 +7,20 @@ export const AuthContext = createContext(null);
 
 
 function AuthContextProvider({children}) {
-
+    const navigate = useNavigate();
     const [authData, setAuthData] = useState({
         isAuth: false,
         user: null,
         status: "pending",
     });
 
-    const navigate = useNavigate();
 
     useEffect(() => {
-        const storedToken = localStorage.getItem('token');
-
+        const storedToken = localStorage.getItem('Token');
+        console.log("Is login of logout?");
         if (storedToken && CheckTokenValidity(storedToken)) {
             void login(storedToken);
+            console.log("storedToken: ", storedToken)
         } else {
             void logout();
         }
@@ -29,9 +29,10 @@ function AuthContextProvider({children}) {
 
 
     function login(jwt_token, redirect) {
-
+        console.log("Login is aangeroepen");
         const decodedToken = jwtDecode(jwt_token);
         const {sub, id, authorities} = decodedToken;
+
 
         setAuthData({
             ...authData,
@@ -45,9 +46,11 @@ function AuthContextProvider({children}) {
         });
 
 
-        localStorage.setItem('token', jwt_token);
+        localStorage.setItem('Token', jwt_token);
 
         console.log("Gebruiker is ingelogd!");
+        console.log(decodedToken.id);
+
         if (redirect) navigate(redirect);
     }
 

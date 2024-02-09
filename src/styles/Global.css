@@ -22,12 +22,13 @@ main{
 }
 
 section{
-    /*background-color:blue;*/
+    background-color:white;
     width: var(--inner-container-width);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: var(--border-radius-large);
 }
 
 /*page main and section outer*/
