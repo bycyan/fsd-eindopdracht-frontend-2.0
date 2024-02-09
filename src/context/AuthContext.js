@@ -1,16 +1,18 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import { jwtDecode, JwtDecodeOptions } from 'jwt-decode';
 import {CheckTokenValidity} from "../helper/CheckTokenValidity";
+import {getUser} from "../services/userApi";
 
 export const AuthContext = createContext(null);
-
+export const useAuth = () => useContext(AuthContext);
 
 function AuthContextProvider({children}) {
     const navigate = useNavigate();
     const [authData, setAuthData] = useState({
         isAuth: false,
         user: null,
+        userData: null, // Add userData to the state
         status: "pending",
     });
 
@@ -28,30 +30,35 @@ function AuthContextProvider({children}) {
     }, []);
 
 
-    function login(jwt_token, redirect) {
+    const login = async (jwt_token, redirect) => {
         console.log("Login is aangeroepen");
         const decodedToken = jwtDecode(jwt_token);
         const {sub, id, authorities} = decodedToken;
 
+        try {
+            // const userData = await getUser(id, jwt_token);
+            setAuthData({
+                ...authData,
+                isAuth: true,
+                user: {
+                    email: sub,
+                    id: id,
+                    authorities: authorities,
+                },
+                // userData: userData,
+                status: "done",
+            });
 
-        setAuthData({
-            ...authData,
-            isAuth: true,
-            user: {
-                email: sub,
-                id: id,
-                authorities: authorities,
-            },
-            status: "done",
-        });
 
+            localStorage.setItem('Token', jwt_token);
 
-        localStorage.setItem('Token', jwt_token);
+            console.log("Gebruiker is ingelogd!");
+            console.log(decodedToken.id);
 
-        console.log("Gebruiker is ingelogd!");
-        console.log(decodedToken.id);
-
-        if (redirect) navigate(redirect);
+            if (redirect) navigate(redirect);
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
     }
 
     function logout() {

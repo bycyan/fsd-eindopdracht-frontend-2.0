@@ -21,6 +21,7 @@
     --spacing-small: 10px;
     --spacing-medium: 20px;
     --spacing-large: 40px;
+    --spacing-extralarge: 60px;
 
     /* Border radius */
     --border-radius-small: 4px;
@@ -30,6 +31,7 @@
     /*Containers*/
     --inner-container-width: 570px;
     --outer-container-width: 100vw;
+    --shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
 }
 
 h6{
