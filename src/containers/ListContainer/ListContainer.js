@@ -6,8 +6,6 @@ import useProject from "../../componenets/ProjectListComponent/ProjectListCompon
 
 const ListContainer = () => {
     const currentProject = useProject();
-    console.log("this is a project: ", currentProject)
-
 
     return (
         <>
@@ -36,7 +34,8 @@ const ListContainer = () => {
                 <div className={styles.line}></div>
                 <div className={styles.bttnGroup}>
                     <div className={styles.btn}>+</div>
-                    <p>Add Project</p></div>
+                    <p>Add project</p>
+                </div>
             </div>
 
         </div> ) : (
