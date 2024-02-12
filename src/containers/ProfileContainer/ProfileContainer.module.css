@@ -5,3 +5,7 @@
 .information img{
     margin-bottom: var(--spacing-medium);
 }
+
+.information h3{
+    margin-bottom: var(--spacing-medium);
+}

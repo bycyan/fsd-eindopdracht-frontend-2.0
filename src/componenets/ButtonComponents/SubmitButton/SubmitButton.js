@@ -1,9 +1,16 @@
 import React from "react";
-import "./SubmitButton.module.css";
-export class SubmitButton extends React.Component {
-    render() {
-        return (
-            <button>{this.props.text}</button>
-        );
-    }
+import "./SubmitButton.module.css"
+
+function SubmitButton({ className, text, onClick }) {
+    const handleClick = () => {
+        onClick();
+    };
+
+    return (
+        <button className={className} onClick={handleClick}>
+            {text}
+        </button>
+    );
 }
+
+export default SubmitButton;

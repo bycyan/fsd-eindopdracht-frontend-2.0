@@ -2,11 +2,18 @@ button{
     border: none;
     background-color: var(--primary-color);
     padding: 20px;
-    width: 300px;
+    /*width: 300px;*/
     font-size: 14px;
     font-weight: 500;
     color: var(--secondary-color);
     border-radius: var(--border-radius-large);
     cursor: pointer;
     font-family: var(--font-family);
+}
+
+.nav{
+    width: 4000px;
+    font-weight: 500;
+    background-color: #28a745;
+    border-radius: var(--border-radius-large);
 }

@@ -23,3 +23,8 @@ img {
     border-radius: 100%;
     margin-top: -75px;
 }
+
+.project-image{
+    height: 100%;
+    width: fit-content;
+}

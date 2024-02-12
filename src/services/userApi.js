@@ -25,3 +25,19 @@ export const getUser = async (userId, token) => {
         return null;
     }
 };
+
+
+export const getProject = async (projectId, token) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/project/${projectId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+};

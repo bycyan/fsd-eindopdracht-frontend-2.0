@@ -5,6 +5,7 @@ body{
     font-family: var(--font-family);
     color: var(--text-color);
 
+
     /*display: flex;*/
     /*flex-direction: column;*/
     /*justify-content: center;*/
@@ -13,12 +14,14 @@ body{
 }
 
 main{
+    padding-bottom: 100px;
     width: var(--outer-container-width);
     /*background-color: #28a745;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: var(--spacing-small);
 }
 
 section{
@@ -29,7 +32,7 @@ section{
     justify-content: center;
     align-items: center;
     border-radius: var(--border-radius-large);
-    box-shadow: var(--shadow);
+
 }
 
 /*page main and section outer*/
