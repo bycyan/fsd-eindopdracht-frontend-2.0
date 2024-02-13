@@ -7,7 +7,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import MainNavComponent from "./componenets/NavComponents/MainNavComponent/MainNavComponent";
 
 function App() {
-    const location = useLocation(); // Get the current location object
+    const location = useLocation();
     const hideNav = location.pathname === "/";
 
   return (

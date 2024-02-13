@@ -18,13 +18,13 @@ export default function AuthPage(){
                 alt="logo"
                 className="logo"
             />
-            <div>
+            <section>
             {loggedIn ? (
                 <ProfilePage />
             ) : (
                 <FormContainer onSubmit={handleLogin} />
             )}
-            </div>
+            </section>
         </main>
     );
 }

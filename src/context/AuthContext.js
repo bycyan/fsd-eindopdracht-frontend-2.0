@@ -18,20 +18,23 @@ function AuthContextProvider({children}) {
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken && CheckTokenValidity(storedToken)) {
+            console.log("ingelogd")
             void login(storedToken);
         } else {
+            console.log("uitgelogd")
             void logout();
         }
 
     }, []);
 
-    const login = async (jwt_token) => {
+    function login(jwt_token) {
+        console.log("Login is aangeroepen");
         const decodedToken = jwtDecode(jwt_token);
         const { sub, id, authorities } = decodedToken;
 
         try {
-            setAuthData({
-                ...authData,
+            setAuthData(prevAuthData => ({
+                ...prevAuthData,
                 isAuth: true,
                 user: {
                     email: sub,
@@ -39,7 +42,7 @@ function AuthContextProvider({children}) {
                     authorities: authorities,
                 },
                 status: "done",
-            });
+            }));
             navigate("/Profile");
 
         } catch (error) {
@@ -49,14 +52,15 @@ function AuthContextProvider({children}) {
 
     function logout() {
         localStorage.removeItem('token');
-        setAuthData({
-            ...authData,
+        setAuthData(prevAuthData => ({
+            ...prevAuthData,
             isAuth: false,
             user: null,
             status: "done",
-        })
-        navigate("/");
+        }));
+        // navigate("/");
     }
+
 
     const data = {
         isAuth: authData.isAuth,

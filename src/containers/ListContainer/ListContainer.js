@@ -24,9 +24,9 @@ const ListContainer = () => {
                         </div>
                         <div className={styles.item}>
                             <h4>{project.projectName}</h4>
-                            <p>CONTIKI</p>
+                            <p>{project.projectArtist}</p>
                         </div>
-                        <div className={styles.item}>2023</div>
+                        <div className={styles.item}>{project.projectRelease}</div>
                     </div>
                 ))}
             </div>

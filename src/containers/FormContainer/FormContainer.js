@@ -21,15 +21,22 @@ const FormContainer = ({ onSubmit }) => {
         setPassword(event.target.value);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
         const user = {
             authEmail: email,
             authPassword: password
         };
 
+        console.log(user)
+        const response = await loginUser(user);
+        console.log("response after login: ", response)
+        localStorage.setItem('token', response.data.jwt);
+
         try {
             const response = await loginUser(user);
+            console.log(response)
             if (response) {
                 localStorage.setItem('token', response.data.jwt);
                 await login (response.data.jwt);
@@ -53,6 +60,7 @@ const FormContainer = ({ onSubmit }) => {
                 <CheckboxInput text="Remember me" />
                 <LinkButton text="Forgot Password?" href="#"/>
             </div>
+            {/*<button>login</button>*/}
             <SubmitButton text="Login" onClick={handleLogin}/>
             <div className={styles.auth_switch}><h6 >Don't have an account? </h6> <LinkButton text="Register" href="/register/*"/></div>
         </form>

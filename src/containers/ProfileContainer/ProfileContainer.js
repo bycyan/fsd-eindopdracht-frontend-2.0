@@ -4,10 +4,28 @@ import header_dummy from "../../assets/header-img.jpeg";
 import profile_img from "../../assets/profile-img.jpeg";
 import styles from "./ProfileContainer.module.css";
 import useUser from "../../componenets/UserComponent/UserComponent";
+import {getProfileImage} from "../../services/userApi";
 
 const ProfileContainer = () => {
     const currentUser = useUser();
+    const [profileImageUrl, setProfileImageUrl] = useState(null);
 
+    useEffect(() => {
+        const fetchProfileImage = async () => {
+            if (currentUser) {
+                const imageData = await getProfileImage(currentUser.userId, localStorage.getItem('token'));
+                if (imageData) {
+                    const blob = new Blob([imageData], { type: 'image/jpeg' });
+                    const url = URL.createObjectURL(blob);
+                    setProfileImageUrl(url);
+                }
+            }
+        };
+
+        fetchProfileImage();
+    }, [currentUser]);
+
+    console.log(profileImageUrl)
     return (
         <>
             {currentUser ? (
@@ -21,7 +39,7 @@ const ProfileContainer = () => {
                     </div>
                     <div className={styles.information}>
                         <ImageComponent
-                            src={profile_img}
+                            src={profileImageUrl}
                             alt="profile image"
                             className="profile-image"
                         />
