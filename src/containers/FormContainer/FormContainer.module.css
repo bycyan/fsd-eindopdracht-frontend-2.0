@@ -34,3 +34,7 @@
     margin-bottom: var(--spacing-large);
     font-weight: 600;
 }
+
+.postForm{
+    padding: 40px;
+}

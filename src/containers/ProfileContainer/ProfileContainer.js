@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ImageComponent } from "../../componenets/PageComponents/ImageComponent/ImageComponent";
 import header_dummy from "../../assets/header-img.jpeg";
 import profile_img from "../../assets/profile-img.jpeg";
 import styles from "./ProfileContainer.module.css";
 import useUser from "../../componenets/UserComponent/UserComponent";
-import {getProfileImage} from "../../services/userApi";
+import { getProfileImage, uploadProfileImage } from "../../services/userApi";
 
 const ProfileContainer = () => {
     const currentUser = useUser();
     const [profileImageUrl, setProfileImageUrl] = useState(null);
+    const fileInput = useRef(null);
 
     useEffect(() => {
         const fetchProfileImage = async () => {
@@ -25,7 +26,21 @@ const ProfileContainer = () => {
         fetchProfileImage();
     }, [currentUser]);
 
-    console.log(profileImageUrl)
+    const handleImageChange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+                const userId = 1;
+                await uploadProfileImage(localStorage.getItem('token'), userId, formData);
+                window.location.reload();
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+        }
+    };
+
     return (
         <>
             {currentUser ? (
@@ -42,6 +57,7 @@ const ProfileContainer = () => {
                             src={profileImageUrl}
                             alt="profile image"
                             className="profile-image"
+                            onChange={handleImageChange}
                         />
                         <h3>{currentUser.userFirstName} {currentUser.userLastName}</h3>
                         <p>{currentUser.jobDescription}</p>
@@ -49,7 +65,7 @@ const ProfileContainer = () => {
                     </div>
                 </div>
             ) : (
-                <p>Loading...</p> // Render a loading message while userData is being fetched
+                <p>Loading...</p>
             )}
         </>
     );

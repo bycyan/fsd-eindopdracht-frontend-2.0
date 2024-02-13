@@ -70,3 +70,18 @@ export const getProject = async (projectId, token) => {
         return null;
     }
 };
+
+export async function postProject(userId, token, projectData) {
+    try {
+        const response = await axios.post(`${BASE_URL}/project/${userId}`, projectData,{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+}

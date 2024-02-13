@@ -47,10 +47,6 @@ const FormContainer = ({ onSubmit }) => {
         }
     };
 
-    // const handleLogin = async () => {
-    //     await handleSubmit();
-    // }
-
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
             <h1>Login</h1>

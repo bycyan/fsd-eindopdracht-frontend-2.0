@@ -24,6 +24,7 @@ img {
     margin-top: -75px;
     background-color: #cccccc;
     z-index: 1000;
+    cursor: pointer;
 }
 
 .profile-image:hover{
