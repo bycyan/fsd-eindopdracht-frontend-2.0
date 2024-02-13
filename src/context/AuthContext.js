@@ -58,7 +58,7 @@ function AuthContextProvider({children}) {
             user: null,
             status: "done",
         }));
-        // navigate("/");
+        navigate("/");
     }
 
 

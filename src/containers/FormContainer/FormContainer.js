@@ -47,9 +47,9 @@ const FormContainer = ({ onSubmit }) => {
         }
     };
 
-    const handleLogin = async () => {
-        await handleSubmit();
-    }
+    // const handleLogin = async () => {
+    //     await handleSubmit();
+    // }
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -60,8 +60,8 @@ const FormContainer = ({ onSubmit }) => {
                 <CheckboxInput text="Remember me" />
                 <LinkButton text="Forgot Password?" href="#"/>
             </div>
-            {/*<button>login</button>*/}
-            <SubmitButton text="Login" onClick={handleLogin}/>
+            <button>login</button>
+            {/*<SubmitButton text="Login" onClick={handleLogin}/>*/}
             <div className={styles.auth_switch}><h6 >Don't have an account? </h6> <LinkButton text="Register" href="/register/*"/></div>
         </form>
     );

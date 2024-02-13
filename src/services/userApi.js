@@ -45,6 +45,16 @@ export const getProfileImage = async (userId, token) => {
     }
 };
 
+export async function uploadProfileImage(token, userId, formData) {
+    const response = await axios.post(`${BASE_URL}/file/user_image/${userId}`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return response;
+}
+
 
 export const getProject = async (projectId, token) => {
     try {
