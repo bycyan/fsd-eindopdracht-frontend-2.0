@@ -1,12 +1,11 @@
 nav{
-    /*height: 90px;*/
     background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--shadow);
     margin-bottom: var(--spacing-small);
-    padding: 35px 90px;
+    padding: 20px 90px;
 }
 
 .bttnGroup{

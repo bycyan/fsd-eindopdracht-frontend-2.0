@@ -12,7 +12,7 @@ button{
     transition: ease-in;
     transition-duration: 0.3s;
     margin-right: var(--spacing-small);
-    margin-top: var(--spacing-small) ;
+    /*margin-top: var(--spacing-small) ;*/
 }
 
 button:hover{

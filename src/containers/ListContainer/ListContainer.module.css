@@ -9,9 +9,16 @@
 
 .container{
     display: flex;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
     width: 100%;
     height: 85px;
+}
 
+.songListContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .container p{

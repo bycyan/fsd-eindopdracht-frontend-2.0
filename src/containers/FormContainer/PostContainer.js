@@ -62,7 +62,7 @@ const FormContainer = ({ onCancel }) => {
             <TextInput onChange={handleReleaseChange} value={projectRelease} placeholder={"Project release"}/>
             <br/>
             <ActionButton text="Add project" />
-            <CancelButton text="Cancel" type="button" onClick={handleCancel}/>
+            <CancelButton className={"cancel"} text="Cancel" type="button" onClick={handleCancel}/>
         </form>
     );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./CancelButton.module.css";
 
 function CancelButton({ className, text, onClick }) {
     const handleClick = () => {
@@ -6,7 +7,7 @@ function CancelButton({ className, text, onClick }) {
     };
 
     return (
-        <button className={className} onClick={handleClick}>
+        <button className={`${styles.cancelButton} ${className}`} onClick={handleClick}>
             {text}
         </button>
     );

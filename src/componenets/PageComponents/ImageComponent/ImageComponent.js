@@ -8,18 +8,26 @@ export class ImageComponent extends React.Component {
     };
 
     render() {
+        const { src, alt, className, showEdit } = this.props;
         return (
             <>
-                <img
-                    src={this.props.src}
-                    alt={this.props.alt}
-                    className={styles[this.props.className]}
-                    onClick={this.handleImageClick} // Attach click event handler
-                />
+                <div className={styles.image_container}>
+                    <img
+                        src={src}
+                        alt={alt}
+                        className={styles[className]}
+                        onClick={this.handleImageClick}
+                    />
+                    {showEdit && (
+                        <div className={styles.image_overlay} onClick={this.handleImageClick}>
+                            <span className={styles.image_edit}>Edit</span>
+                        </div>
+                    )}
+                </div>
                 <input
                     type="file"
                     style={{ display: 'none' }}
-                    ref={input => this.fileInput = input} // Create a reference to the file input element
+                    ref={input => (this.fileInput = input)}
                     onChange={this.props.onChange}
                 />
             </>

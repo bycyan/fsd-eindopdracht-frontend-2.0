@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ImageComponent } from "../../componenets/PageComponents/ImageComponent/ImageComponent";
 import header_dummy from "../../assets/header-img.jpeg";
-import profile_img from "../../assets/profile-img.jpeg";
+import profile_dummy from "../../assets/profile-dummy.jpg";
 import styles from "./ProfileContainer.module.css";
 import useUser from "../../componenets/UserComponent/UserComponent";
 import { getProfileImage, uploadProfileImage } from "../../services/userApi";
@@ -19,6 +19,8 @@ const ProfileContainer = () => {
                     const blob = new Blob([imageData], { type: 'image/jpeg' });
                     const url = URL.createObjectURL(blob);
                     setProfileImageUrl(url);
+                } else {
+                    setProfileImageUrl(profile_dummy);
                 }
             }
         };
@@ -58,6 +60,7 @@ const ProfileContainer = () => {
                             alt="profile image"
                             className="profile-image"
                             onChange={handleImageChange}
+                            showEdit="true"
                         />
                         <h3>{currentUser.userFirstName} {currentUser.userLastName}</h3>
                         <p>{currentUser.jobDescription}</p>

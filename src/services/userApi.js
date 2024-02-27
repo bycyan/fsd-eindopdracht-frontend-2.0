@@ -85,3 +85,51 @@ export async function postProject(userId, token, projectData) {
         return null;
     }
 }
+
+export const getSongs = async (projectId, token) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/song/${projectId}/songs`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        });
+        // console.log("liedjes: ", response)
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+};
+
+export const getSong = async (songId, token) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/file/song/${songId}`, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
+            }
+        });
+        console.log("liedje: ", response)
+        return response;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+};
+
+export const getContributors = async (projectId, token) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/project/${projectId}`, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`
+            }
+        });
+        console.log("liedje: ", response)
+        return response;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+};

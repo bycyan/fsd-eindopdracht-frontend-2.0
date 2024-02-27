@@ -3,13 +3,11 @@ import {ImageComponent} from "../../componenets/PageComponents/ImageComponent/Im
 import project_img from "../../assets/project-img.jpeg";
 import React from "react";
 import useProject from "../../componenets/ProjectListComponent/ProjectListComponent";
-import SubmitButton from "../../componenets/ButtonComponents/SubmitButton/SubmitButton";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
+import {Link} from "react-router-dom";
 
 const ListContainer = ({ onAddProjectClick }) => {
     const currentProject = useProject();
-
-    // Sort projects by projectId in descending order
     const sortedProjects = currentProject ? currentProject.sort((a, b) => b.projectId - a.projectId) : [];
 
     return (
@@ -19,10 +17,18 @@ const ListContainer = ({ onAddProjectClick }) => {
                     <h3>Projects</h3>
                     <div className={styles.list}>
                         {sortedProjects.map(project => (
+                            <Link
+                                to={{
+                                    pathname: `/project/${project.projectId}`
+                                }}
+                                className={styles.link}
+                                key={project.projectId}
+                            >
                             <div className={styles.container} key={project.projectId}>
+
                                 <div className={styles.item}>
                                     <ImageComponent
-                                        src={project_img} // Replace with project cover image if available
+                                        src={project_img}
                                         alt="project image"
                                         className="project-image"
                                     />
@@ -33,6 +39,7 @@ const ListContainer = ({ onAddProjectClick }) => {
                                 </div>
                                 <div className={styles.item}>{project.projectRelease}</div>
                             </div>
+                                </Link>
                         ))}
                     </div>
                     <div className={styles.addContainer}>
@@ -45,7 +52,7 @@ const ListContainer = ({ onAddProjectClick }) => {
                     </div>
 
                 </div> ) : (
-                <p>Loading...</p> // Render a loading message while userData is being fetched
+                <p>Loading...</p>
             )}
         </>
     );

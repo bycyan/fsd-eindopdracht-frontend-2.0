@@ -5,15 +5,20 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {ImageComponent} from "../../PageComponents/ImageComponent/ImageComponent";
 import SubmitButton from "../../ButtonComponents/SubmitButton/SubmitButton";
 import {useAuth} from "../../../context/AuthContext";
+import useUser from "../../UserComponent/UserComponent";
+import {LinkButton} from "../../ButtonComponents/LinkButton/LinkButton";
 
-export default function MainNavComponent() {
+export default function MainNavComponent({ projectName }) {
+    const currentUser = useUser();
     const { logout } = useAuth();
     const location = useLocation();
     const pathname = location.pathname;
 
-    const getPageName = () => {
-        return pathname.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, ' ');
-    }
+    // console.log(currentUser)
+
+    // const getPageName = () => {
+    //     return pathname.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, ' ');
+    // }
 
     const handleLogout = async () => {
         await logout();
@@ -22,20 +27,22 @@ export default function MainNavComponent() {
     return (
         <>
             <nav className="upper-nav-back">
-                    <h3>{getPageName()}</h3>
-                    <div className={styles.bttnGroup}>
-                    <SubmitButton
-                        text="Logout"
-                        className="nav"
-                        onClick={handleLogout}
-                    />
-                    <ImageComponent
-                        src={logo}
-                        alt="logo"
-                        className="logo"
-                    />
-                    </div>
 
+                {currentUser &&
+                    <LinkButton className={"nav-profile-link"} text={"Hey, " + currentUser.userFirstName} href="/"/>
+                }
+                    <div className={styles.bttnGroup}>
+                        <SubmitButton
+                            text="Logout"
+                            className="nav"
+                            onClick={handleLogout}
+                        />
+                        <ImageComponent
+                            src={logo}
+                            alt="logo"
+                            className="logo"
+                        />
+                    </div>
             </nav>
         </>
     );
