@@ -133,3 +133,40 @@ export const getContributors = async (projectId, token) => {
         return null;
     }
 };
+
+export async function postSong(projectId, token, songData) {
+    try {
+        const response = await axios.post(`${BASE_URL}/song/${projectId}`, songData,{
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+}
+
+export async function postSongFile(songId, token, songData) {
+    try {
+        const formData = new FormData();
+        formData.append('file', songData); // Ensure that the key matches the one expected by the server
+
+        const response = await axios.post(`${BASE_URL}/file/song/${songId}`, formData, {
+            headers: {
+                Accept: "audio/mpeg",
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data" // Set the Content-Type to multipart/form-data
+            },
+            responseType: 'arraybuffer'
+        });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+}
+

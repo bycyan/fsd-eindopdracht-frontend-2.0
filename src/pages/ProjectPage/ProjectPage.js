@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useLocation } from "react-router-dom";
 import useProject from "../../componenets/ProjectListComponent/ProjectListComponent";
 import {ImageComponent} from "../../componenets/PageComponents/ImageComponent/ImageComponent";
@@ -8,24 +8,33 @@ import styles from './ProjectPage.module.css'
 import ListContainer from "../../containers/ListContainer/ListContainer";
 import SongListContainer from "../../containers/ListContainer/SongListContainer";
 import ContributorListContainer from "../../containers/ListContainer/ContributorListContainer";
+import PostContainer from "../../containers/FormContainer/PostContainer";
+import PostSongContainer from "../../containers/FormContainer/PostSongContainer";
 
 export default function ProjectPage() {
+    //
+    const [isWindowOpen, setIsWindowOpen] = useState(false);
+    console.log(isWindowOpen)
+
+    const handleAddSongModal = () => {
+        setIsWindowOpen(true);
+    }
+
+    const handleCancel = () => {
+        setIsWindowOpen(false);
+    };
+    //
     const location = useLocation();
     const currentProject = useProject();
     console.log(currentProject)
 
-    // Ensure that currentProject is not null before trying to find the matching project
     if (!currentProject) {
-        return <div>Loading...</div>; // or any other loading indicator
+        return <div>Loading...</div>;
     }
 
-    // Extract projectId from pathname
     const projectIdFromPath = parseInt(location.pathname.split("/").pop());
-
-    // Find the project with matching projectId
     const matchedProject = currentProject.find(project => project.projectId === projectIdFromPath);
 
-    // Render project details if project is defined
     return (
         <div>
             {matchedProject && (
@@ -41,6 +50,7 @@ export default function ProjectPage() {
                                 src={project_img}
                                 alt="logo"
                                 className="project-image-img"
+                                showEdit="true"
                             />
                             <div className={styles.headerInfo}>
                                 <div>
@@ -52,15 +62,24 @@ export default function ProjectPage() {
                         </div>
 
                         <section>
-                            <SongListContainer projectId={matchedProject.projectId} />
+                            <SongListContainer projectId={matchedProject.projectId} addSongModal={handleAddSongModal}/>
                         </section>
 
                         <section>
-                            <ContributorListContainer projectId={matchedProject.projectId} />
+                            <ContributorListContainer projectId={matchedProject.projectId}/>
                         </section>
                     </main>
+                    {isWindowOpen && (
+                        <div className={styles.modalOverlay}>
+                            <section className={styles.modalOnTop}>
+                                <PostSongContainer onCancel={handleCancel} projectId={matchedProject.projectId}/>
+                            </section>
+                        </div>
+                    )}
                 </>
+
             )}
+
         </div>
     );
 }

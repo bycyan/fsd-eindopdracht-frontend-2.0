@@ -12,11 +12,6 @@ export default function AuthPage(){
 
     return (
         <main>
-            <ImageComponent
-                src={logo}
-                alt="logo"
-                className="logo"
-            />
             <FormContainer onSubmit={handleLogin} />
         </main>
     );

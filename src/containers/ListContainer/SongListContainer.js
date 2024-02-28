@@ -7,9 +7,10 @@ import ActionButton from "../../componenets/ButtonComponents/ActionButton/Action
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {getProfileImage, getSong, getSongs} from "../../services/userApi";
+import profile_dummy from "../../assets/profile-dummy.jpg";
+import PostContainer from "../FormContainer/PostContainer";
 
-const SongListContainer = ({ projectId }) => {
-    // console.log(projectId)
+const SongListContainer = ({ projectId, addSongModal}) => {
     const [songsOfProject, setSongsOfProject] = useState([]);
     const [currentSong, setCurrentSong] = useState([]);
     const projectSongs = songsOfProject ? songsOfProject.sort((a, b) => b.songId - a.songId) : [];
@@ -26,36 +27,19 @@ const SongListContainer = ({ projectId }) => {
         fetchSongs();
     }, [projectId]);
 
+    //
     const handleClick = async (songId) => {
         try {
             const songData = await getSong(songId, localStorage.getItem("token"));
             const audioData = songData.data;
-
-            // Create a Blob from the binary audio data
             const blob = new Blob([audioData], { type: 'audio/mp3' });
-
-            // Create a URL for the Blob
             const audioUrl = URL.createObjectURL(blob);
-            console.log("audio url: ", audioUrl)
-
-            // Create an <audio> element and set its source to the created URL
-            // const audioElement = new Audio(audioUrl);
-            // Set the source of the <audio> element to the created URL
-            const audioElement = document.createElement('audio');
-            audioElement.src = audioUrl;
-            audioElement.controls = true; // Add controls to the audio player
-
-            // Replace the existing audio player with the new one
-            setCurrentSong(audioElement);
-
-            console.log("songData: ", songData);
+            setCurrentSong(audioUrl);
+            // console.log("Resource URI:", audioUrl);
         } catch (error) {
             console.error("Error fetching song:", error);
         }
     };
-
-
-    console.log("current song source: ", currentSong && currentSong.src);
 
     return (
         <>
@@ -72,15 +56,15 @@ const SongListContainer = ({ projectId }) => {
                                 >
                                         <h4>{song.songName}</h4>
                                         <h4>{song.songUrl}</h4>
-                                        <p>2:32</p>
+                                        {/*<p>2:32</p>*/}
+
+                                    <audio controls>
+                                        <source src={song.songUrl} type="audio/mp3" />
+                                        Your browser does not support the audio element.
+                                    </audio>
+
                                 </div>
                         ))}
-                        {currentSong && (
-                            <audio controls>
-                                <source src={currentSong.src} type="audio/mp3" />
-                                Your browser does not support the audio element.
-                            </audio>
-                        )}
                     </div>
 
                  ) : (
@@ -89,7 +73,7 @@ const SongListContainer = ({ projectId }) => {
 
                 <div className={styles.addContainer}>
                     <div className={styles.line}></div>
-                    <div>
+                    <div onClick={addSongModal}>
                         <ActionButton text="Add Song" />
                     </div>
                 </div>

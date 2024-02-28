@@ -13,7 +13,7 @@ export default function ProfilePage(){
     }
 
     const handleCancel = () => {
-        setIsProjectWindowOpen(false); // Set the state to false to close the project window
+        setIsProjectWindowOpen(false);
     };
 
     return (

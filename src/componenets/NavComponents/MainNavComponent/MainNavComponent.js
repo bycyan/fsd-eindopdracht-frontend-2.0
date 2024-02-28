@@ -29,7 +29,7 @@ export default function MainNavComponent({ projectName }) {
             <nav className="upper-nav-back">
 
                 {currentUser &&
-                    <LinkButton className={"nav-profile-link"} text={"Hey, " + currentUser.userFirstName} href="/"/>
+                    <LinkButton className={"nav-profile-link"} text={"Hey, " + currentUser.userFirstName + " " + currentUser.userLastName} href="/"/>
                 }
                     <div className={styles.bttnGroup}>
                         <SubmitButton
