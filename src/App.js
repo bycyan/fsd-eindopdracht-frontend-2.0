@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import "./styles/Global.css";
@@ -11,16 +12,16 @@ function App() {
     const location = useLocation();
     const hideNav = location.pathname === "/";
 
-  return (
-    <>
-        {!hideNav && <MainNavComponent />}
-      <Routes>
-          <Route path="/*" element={<AuthPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/project/:projectId" element={<ProjectPage />} />
-      </Routes>
-    </>
-  );
+    return (
+        <>
+            {!hideNav && <MainNavComponent />}
+            <Routes>
+                <Route path="/" element={<AuthPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/project/:projectId" element={<ProjectPage />} />
+            </Routes>
+        </>
+    );
 }
 
 export default App;

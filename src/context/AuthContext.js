@@ -18,17 +18,34 @@ function AuthContextProvider({children}) {
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken && CheckTokenValidity(storedToken)) {
-            console.log("ingelogd")
             void login(storedToken);
         } else {
-            console.log("uitgelogd")
             void logout();
         }
 
     }, []);
 
+    // useEffect(() => {
+    //     const storedToken = localStorage.getItem('token');
+    //     if (storedToken && CheckTokenValidity(storedToken)) {
+    //         // Check if the user is already authenticated
+    //         if (!authData.isAuth) {
+    //             console.log('User is already logged in.');
+    //             void login(storedToken);
+    //         } else {
+    //             console.log('User is already logged in. No need to login again.');
+    //             setAuthData(prevAuthData => ({
+    //                 ...prevAuthData,
+    //                 status: 'done',
+    //             }));
+    //         }
+    //     } else {
+    //         console.log('User is not logged in.');
+    //         void logout();
+    //     }
+    // }, []);
+
     function login(jwt_token) {
-        console.log("Login is aangeroepen");
         const decodedToken = jwtDecode(jwt_token);
         const { sub, id, authorities } = decodedToken;
 
@@ -43,7 +60,7 @@ function AuthContextProvider({children}) {
                 },
                 status: "done",
             }));
-            navigate("/Profile");
+            // navigate("/profile");
 
         } catch (error) {
             console.error("Error fetching user data:", error);

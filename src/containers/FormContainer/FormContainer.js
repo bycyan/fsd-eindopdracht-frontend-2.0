@@ -7,8 +7,10 @@ import {CheckboxInput} from "../../componenets/InputFieldComponents/CheckboxInpu
 import {LinkButton} from "../../componenets/ButtonComponents/LinkButton/LinkButton";
 import { loginUser } from "../../services/userApi";
 import { useAuth } from '../../context/AuthContext';
+import {useNavigate} from "react-router-dom";
 
 const FormContainer = ({ onSubmit }) => {
+    const navigate = useNavigate();
     const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,22 +31,19 @@ const FormContainer = ({ onSubmit }) => {
             authPassword: password
         };
 
-        console.log(user)
-        const response = await loginUser(user);
-        console.log("response after login: ", response)
-        localStorage.setItem('token', response.data.jwt);
-
         try {
             const response = await loginUser(user);
-            console.log(response)
             if (response) {
                 localStorage.setItem('token', response.data.jwt);
                 await login (response.data.jwt);
+                navigate("/profile");
             } else {
             }
         } catch (error) {
             console.error("Error:", error);
         }
+
+
     };
 
     return (

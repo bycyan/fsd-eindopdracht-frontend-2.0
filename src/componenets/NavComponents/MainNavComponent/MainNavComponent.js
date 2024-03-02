@@ -14,8 +14,6 @@ export default function MainNavComponent({ projectName }) {
     const location = useLocation();
     const pathname = location.pathname;
 
-    // console.log(currentUser)
-
     // const getPageName = () => {
     //     return pathname.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, ' ');
     // }
@@ -29,7 +27,7 @@ export default function MainNavComponent({ projectName }) {
             <nav className="upper-nav-back">
 
                 {currentUser &&
-                    <LinkButton className={"nav-profile-link"} text={"Hey, " + currentUser.userFirstName + " " + currentUser.userLastName} href="/"/>
+                    <LinkButton className={"nav-profile-link"} text={"Hey, " + currentUser.userFirstName + " " + currentUser.userLastName} href="/profile"/>
                 }
                     <div className={styles.bttnGroup}>
                         <SubmitButton

@@ -1,9 +1,14 @@
 import React from "react";
 
-const FileInput = ({ onChange, placeholder }) => { // Remove the 'value' prop since it's not needed for file inputs
+const FileInput = ({ onChange }) => {
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        console.log("Selected file:", file); // Log the selected file
+        onChange(file); // Pass the selected file to the parent component
+    };
+
     return (
-        <input
-        type="file" onChange={(event) => console.log(event.target.files[0])} />
+        <input type="file" onChange={handleFileChange} />
     );
 };
 
