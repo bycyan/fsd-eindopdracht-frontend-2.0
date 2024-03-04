@@ -1,0 +1,21 @@
+.cancel{
+    border: none;
+    background-color: var(--primary-color);
+    padding: 20px;
+    max-width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    color: red;
+    border-radius: var(--border-radius-large);
+    cursor: pointer;
+    font-family: var(--font-family);
+    transition: ease-in;
+    transition-duration: 0.3s;
+    margin-right: var(--spacing-small);
+    margin-top: var(--spacing-small) ;
+}
+
+.cancel:hover{
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
+}
