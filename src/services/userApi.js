@@ -93,25 +93,7 @@ export const getSongs = async (projectId, token) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        // console.log("liedjes: ", response)
         return response.data;
-    } catch (error) {
-        console.error("Error:", error);
-        return null;
-    }
-};
-
-export const getSong = async (songId, token) => {
-    try {
-        const response = await axios.get(`${BASE_URL}/file/song/${songId}`, {
-            headers: {
-                Accept: "audio/mpeg",
-                "Content-Type": "multipart/form-data",
-                Authorization: `Bearer ${token}`
-            }
-        });
-        console.log("liedje: ", response)
-        return response;
     } catch (error) {
         console.error("Error:", error);
         return null;
@@ -122,7 +104,7 @@ export const getSongFile = async (songId, token) => {
     try {
         const response = await axios.get(`${BASE_URL}/file/song/${songId}`, {
             headers: {
-                Accept: "audio/mpeg",
+                Accept: "audio/mp3",
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`
             }
@@ -142,7 +124,6 @@ export const getContributors = async (projectId, token) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        console.log("liedje: ", response)
         return response;
     } catch (error) {
         console.error("Error:", error);
@@ -165,26 +146,11 @@ export async function postSong(projectId, token, songData) {
     }
 }
 
-export async function putSong(songId, token, songData) {
-    try {
-        const response = await axios.post(`${BASE_URL}/song/${songId}`, songData,{
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Error:", error);
-        return null;
-    }
-}
-
 export async function postSongFile(songId, token, songData) {
     try {
         const response = await axios.post(`${BASE_URL}/file/song/${songId}`, songData, {
             headers: {
-                Accept: "audio/mpeg",
+                Accept: "audio/mp3",
                 "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${token}`,
             },

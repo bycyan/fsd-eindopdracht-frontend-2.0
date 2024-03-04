@@ -27,7 +27,7 @@ const ContributorListContainer = ({ projectId }) => {
                     {contributorsOfProject.map(contributor => (
                         <div key={contributor.id} className={styles.contributorContainer}>
                             <h5>{contributor.firstName} {contributor.lastName}</h5>
-                            <LinkButton text="Go to profile" href={`users/${contributor.id}`} />
+                            <LinkButton text="Go to profile" href={`user/${contributor.id}`} />
                         </div>
                     ))}
                 </div>

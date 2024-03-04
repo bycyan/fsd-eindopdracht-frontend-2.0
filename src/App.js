@@ -16,8 +16,9 @@ function App() {
         <>
             {!hideNav && <MainNavComponent />}
             <Routes>
-                <Route path="/" element={<AuthPage />} />
+                <Route path="/*" element={<AuthPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/users/2" element={<ProfilePage />} />
                 <Route path="/project/:projectId" element={<ProjectPage />} />
             </Routes>
         </>
