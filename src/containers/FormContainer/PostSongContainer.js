@@ -38,12 +38,11 @@ const PostSongContainer = ({ projectId, onCancel }) => {
 
         try {
             const response = await postSong(projectId, localStorage.getItem('token'), song);
-            console.log("1: ", response)
             if (response) {
                 const formData = new FormData();
+                console.log(formData)
                 formData.append('file', songFile);
-                const uploadedFile = await postSongFile(response.songId, localStorage.getItem('token'), formData);
-                console.log("2: ", uploadedFile)
+                await postSongFile(response.songId, localStorage.getItem('token'), formData);
             }
             window.location.reload();
         } catch (error) {

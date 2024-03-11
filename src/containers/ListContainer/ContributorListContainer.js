@@ -4,7 +4,7 @@ import { getContributors } from "../../services/userApi";
 import { LinkButton } from "../../componenets/ButtonComponents/LinkButton/LinkButton";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
 
-const ContributorListContainer = ({ projectId }) => {
+const ContributorListContainer = ({ projectId, addContributorModal}) => {
     const [contributorsOfProject, setContributorsOfProject] = useState([]);
 
     useEffect(() => {
@@ -19,6 +19,8 @@ const ContributorListContainer = ({ projectId }) => {
         fetchContributors();
     }, [projectId]);
 
+    console.log(contributorsOfProject)
+
     return (
         <div className={styles.content}>
             <h3>Contributors</h3>
@@ -26,16 +28,20 @@ const ContributorListContainer = ({ projectId }) => {
                 <div className={styles.list}>
                     {contributorsOfProject.map(contributor => (
                         <div key={contributor.id} className={styles.contributorContainer}>
-                            <h5>{contributor.firstName} {contributor.lastName}</h5>
-                            <LinkButton text="Go to profile" href={`user/${contributor.id}`} />
+                            <div>
+                                <h5>{contributor.firstName} {contributor.lastName}</h5>
+                                <LinkButton text="Go to profile" href={`user/${contributor.id}`} />
+                            </div>
+                            <h5>{contributor.jobDescription}</h5>
                         </div>
                     ))}
+
                 </div>
             ) : (
                 <p>There are no contributors to display.</p>
             )}
 
-            <div className={styles.addContainer}>
+            <div className={styles.addContainer} onClick={addContributorModal}>
                 <div className={styles.line}></div>
                 <ActionButton text="Add Contributor" />
             </div>

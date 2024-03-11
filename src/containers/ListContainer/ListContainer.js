@@ -1,14 +1,36 @@
 import styles from "./ListContainer.module.css"
 import {ImageComponent} from "../../componenets/PageComponents/ImageComponent/ImageComponent";
-import project_img from "../../assets/project-img.jpeg";
-import React from "react";
+// import project_img from "../../assets/project-img.jpeg";
+import React, {useEffect, useState} from "react";
 import useProject from "../../componenets/ProjectListComponent/ProjectListComponent";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
 import {Link} from "react-router-dom";
+import {getProjectImage} from "../../services/userApi";
 
 const ListContainer = ({ onAddProjectClick }) => {
     const currentProject = useProject();
     const sortedProjects = currentProject ? currentProject.sort((a, b) => b.projectId - a.projectId) : [];
+    const [projectImages, setProjectImages] = useState({});
+
+    useEffect(() => {
+        const fetchProjectImages = async () => {
+            const images = {};
+            for (const project of sortedProjects) {
+                if (project) {
+                    const imageData = await getProjectImage(project.projectId, localStorage.getItem('token'));
+                    if (imageData) {
+                        const blob = new Blob([imageData], { type: 'image/jpeg' });
+                        const url = URL.createObjectURL(blob);
+                        images[project.projectId] = url;
+                    }
+                }
+            }
+            setProjectImages(images);
+        };
+
+        fetchProjectImages();
+    }, [sortedProjects]);
+
 
     return (
         <>
@@ -28,7 +50,7 @@ const ListContainer = ({ onAddProjectClick }) => {
 
                                 <div className={styles.item}>
                                     <ImageComponent
-                                        src={project_img}
+                                        src={projectImages[project.projectId] || project.projectCoverImage} // Use the fetched image URL or default cover image
                                         alt="project image"
                                         className="project-image"
                                     />

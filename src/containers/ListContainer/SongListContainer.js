@@ -20,11 +20,11 @@ const SongListContainer = ({ projectId, addSongModal}) => {
         };
         fetchSongs();
 
-        (async () => {
-            const testSongData = await getSongFile("1", localStorage.getItem("token"));
-            setTestSong(testSongData);
-            console.log(testSong)
-        })();
+        // (async () => {
+        //     const testSongData = await getSongFile("1", localStorage.getItem("token"));
+        //     setTestSong(testSongData);
+        //     console.log(testSong)
+        // })();
     }, [projectId]);
 
     // const handleClick = async (songId) => {
@@ -67,21 +67,19 @@ const SongListContainer = ({ projectId, addSongModal}) => {
         if (songId) {
             try {
                 const songFileResponse = await getSongFile(songId, localStorage.getItem("token"));
-                console.log("response:", songFileResponse)
                 if (songFileResponse && songFileResponse.data) {
                     const blobObject = new Blob([songFileResponse.data], { type: 'audio/mp3' });
-                    const arrayBuffer = await blobObject.arrayBuffer();
-                    console.log("Arraybuffer", arrayBuffer)
-                    setCurrentSong(URL.createObjectURL(new Blob([arrayBuffer], { type: 'audio/mp3' })));
+                    const arrayBuffer = URL.createObjectURL(blobObject)
+                    setCurrentSong(arrayBuffer);
                 } else {
                     console.error("No audio file data found");
                 }
-                console.log("currentSong: ", currentSong)
             } catch (error) {
                 console.error("Error fetching song:", error);
             }
         }
     }
+
 
     return (
         <>
@@ -112,9 +110,9 @@ const SongListContainer = ({ projectId, addSongModal}) => {
                     </div>
                 </div>
             </div>
-            <audio id="audio-element" controls autoPlay src="http://localhost:8080/file/song/1"></audio>
+            {/*<audio id="audio-element" controls autoPlay src="http://localhost:8080/file/song/2" className={styles.audioElement}></audio>*/}
             {currentSong && (
-                <audio id="audio-element" controls autoPlay src={currentSong}></audio>
+                <audio id="audio-element" controls autoPlay src={currentSong} className={styles.audioElement}></audio>
             )}
         </>
     );

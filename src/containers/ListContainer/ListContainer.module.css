@@ -95,3 +95,15 @@
     align-items: center;
 }
 
+.contributorContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.audioElement {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 20px;
+    width: 570px;
+}
+

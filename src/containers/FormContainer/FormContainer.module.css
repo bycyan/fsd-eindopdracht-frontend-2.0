@@ -38,3 +38,36 @@
 .postForm{
     padding: 40px;
 }
+
+.select-container {
+    position: relative;
+}
+
+.selectDropdown {
+    /*position: absolute;*/
+    top: calc(100% + 5px);
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    max-height: 200px; /* Set the maximum height of the dropdown */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius-large);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.selectOption {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.selectOption:hover {
+    background-color: #f0f0f0;
+}
+
+/* Style the selected option */
+.select-option[selected="true"] {
+    background-color: #007bff;
+    color: #fff;
+}

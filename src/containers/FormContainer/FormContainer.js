@@ -8,6 +8,7 @@ import {LinkButton} from "../../componenets/ButtonComponents/LinkButton/LinkButt
 import { loginUser } from "../../services/userApi";
 import { useAuth } from '../../context/AuthContext';
 import {useNavigate} from "react-router-dom";
+import {pem as jwt} from "node-forge";
 
 const FormContainer = ({ onSubmit }) => {
     const navigate = useNavigate();
@@ -34,16 +35,21 @@ const FormContainer = ({ onSubmit }) => {
         try {
             const response = await loginUser(user);
             if (response) {
+                console.log(response)
                 localStorage.setItem('token', response.data.jwt);
                 await login (response.data.jwt);
                 navigate("/profile");
+
+                const decodedToken = jwt.decode(response.data.jwt);
+                console.log(decodedToken)
+                const user_id = decodedToken.payload.sub; // Assuming user ID is stored in the 'sub' claim
+                console.log(user_id)
+
             } else {
             }
         } catch (error) {
             console.error("Error:", error);
         }
-
-
     };
 
     return (
