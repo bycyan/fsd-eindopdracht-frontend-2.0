@@ -1,40 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import PasswordInput from '../../componenets/InputFieldComponents/PasswordInput/PasswordInput';
-import EmailInput from '../../componenets/InputFieldComponents/EmailInput/EmailInput';
-import SubmitButton from '../../componenets/ButtonComponents/SubmitButton/SubmitButton';
+import React, {useState} from 'react';
 import styles from "./FormContainer.module.css";
-import {CheckboxInput} from "../../componenets/InputFieldComponents/CheckboxInput/CheckboxInput";
-import {LinkButton} from "../../componenets/ButtonComponents/LinkButton/LinkButton";
-import {
-    getAllUsers,
-    loginUser,
-    postProject,
-    postSong,
-    postSongFile,
-    putContributorsToProject
-} from "../../services/userApi";
-import { useAuth } from '../../context/AuthContext';
-import useUser from "../../componenets/UserComponent/UserComponent";
+import {getAllUsers, putContributorsToProject} from "../../services/userApi";
 import TextInput from '../../componenets/InputFieldComponents/TextInput/TextInput'
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
 import CancelButton from "../../componenets/ButtonComponents/CancelButton/CancelButton";
-import FileInput from "../../componenets/InputFieldComponents/FileInput/FileInput";
 
 const PostContributorContainer = ({ project, onCancel }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
-
-    console.log(project)
-
+    const [placeholderText, setPlaceholderText] = useState("Search for contributor.."); // Initialize placeholder text state
     const handleNameChange = async (event) => {
         const searchText = event.target.value;
         setSearchTerm(searchText);
         setLoading(true);
         try {
             const response = await getAllUsers(localStorage.getItem('token'), searchText);
-            console.log("Response Data:", response);
             if (response) {
                 const filteredData = response.filter(user =>
                     user.userFirstName.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -43,7 +25,6 @@ const PostContributorContainer = ({ project, onCancel }) => {
                     `${user.userLastName} ${user.userFirstName}`.toLowerCase().includes(searchText.toLowerCase())
                 );
                 setSearchResults(filteredData);
-                console.log("Filter: ", filteredData)
             } else {
                 console.error("Error: Response data is undefined");
             }
@@ -53,26 +34,27 @@ const PostContributorContainer = ({ project, onCancel }) => {
             setLoading(false);
         }
     };
-
-    console.log("search Result: ", searchResults)
-
     const handleCancel = () => {
         onCancel();
     };
-
     const handleSelectUser = (userId) => {
         setSelectedUserId(userId);
+        const selectedUser = searchResults.find(user => user.userId === userId);
+        if (selectedUser) {
+            setPlaceholderText(`${selectedUser.userFirstName} ${selectedUser.userLastName}`);
+            setSearchTerm(""); // Reset searchTerm to empty string when a user is selected
+        }
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (selectedUserId) {
             try {
                 const formData = new FormData();
-                formData.append('projectName', project.projectName);
-                console.log("data", formData)
-
-                await putContributorsToProject(project.projectId, selectedUserId, formData);
+                formData.append('projectData', JSON.stringify(project)); // Stringify project object and append it to FormData
+                const data = [project]
+                const token = localStorage.getItem('token');
+                await putContributorsToProject(project.projectId, selectedUserId, token, data);
+                window.location.reload();
             } catch (error) {
                 console.error("Error adding user to project:", error);
             }
@@ -82,7 +64,7 @@ const PostContributorContainer = ({ project, onCancel }) => {
     return (
         <form className={styles.postForm} onSubmit={handleSubmit}>
             <h1>Add Contributor</h1>
-            <TextInput onChange={handleNameChange} value={searchTerm} placeholder={"Search for contributor.."}/>
+            <TextInput onChange={handleNameChange} value={searchTerm} placeholder={placeholderText}/>
             {searchResults.length > 0 && (
                 <div className={styles.selectDropdown}>
                     {searchResults.map(user => (

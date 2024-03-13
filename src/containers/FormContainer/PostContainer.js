@@ -6,6 +6,9 @@ import TextInput from '../../componenets/InputFieldComponents/TextInput/TextInpu
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
 import CancelButton from "../../componenets/ButtonComponents/CancelButton/CancelButton";
 import FileInput from "../../componenets/InputFieldComponents/FileInput/FileInput";
+import DateInput from "../../componenets/InputFieldComponents/DateInput/DateInput";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 const FormContainer = ({ onCancel }) => {
     const currentUser = useUser();
@@ -14,7 +17,9 @@ const FormContainer = ({ onCancel }) => {
     const [projectRelease, setProjectRelease] = useState('');
     const [projectCoverImage, setProjectCoverImage] = useState('');
     const [fileSelected, setFileSelected] = useState(false);
+    const navigate = useNavigate(); // Initialize useNavigate
 
+    console.log(projectCoverImage)
 
     const handleNameChange = (event) => {
         setProjectName(event.target.value);
@@ -22,8 +27,8 @@ const FormContainer = ({ onCancel }) => {
     const handleArtistChange = (event) => {
         setProjectArtist(event.target.value);
     };
-    const handleReleaseChange = (event) => {
-        setProjectRelease(event.target.value);
+    const handleReleaseChange = (year) => {
+        setProjectRelease(year); // Set projectRelease to the selected year
     };
 
     const handleFileChange = async (event) => {
@@ -32,7 +37,7 @@ const FormContainer = ({ onCancel }) => {
             try {
                 const formData = new FormData();
                 formData.append('file', file);
-                setProjectCoverImage(file); // Optionally, set the file state for display purposes
+                setProjectCoverImage(formData);
                 setFileSelected(true);
                 return formData;
             } catch (error) {
@@ -42,8 +47,6 @@ const FormContainer = ({ onCancel }) => {
             setFileSelected(false);
         }
     };
-
-
 
     const handleCancel = () => {
         onCancel();
@@ -55,18 +58,16 @@ const FormContainer = ({ onCancel }) => {
         const project = {
             projectName: projectName,
             projectArtist: projectArtist,
-            projectRelease: projectRelease
+            projectRelease: projectRelease,
         };
 
         try {
-            const formData = await handleFileChange(event);
-            if (formData) {
+            if (projectCoverImage) {
                 const response = await postProject(currentUser.userId, localStorage.getItem('token'), project);
-                console.log("liedje:", response)
-                // if(response){
-                //     await postProjectImage(response.projectId, localStorage.getItem('token'), formData)
-                //     window.location.reload();
-                // }
+                if (response) {
+                    await postProjectImage(response.projectId, localStorage.getItem('token'), projectCoverImage); // Use projectCoverImage directly
+                    navigate(`/project/${response.projectId}`);
+                }
             } else {
                 console.error("No file selected");
             }
@@ -82,9 +83,8 @@ const FormContainer = ({ onCancel }) => {
             <h1>New Project</h1>
             <TextInput onChange={handleNameChange} value={projectName} placeholder={"Project name"}/>
             <TextInput onChange={handleArtistChange} value={projectArtist} placeholder={"Project artist"} />
-            <TextInput onChange={handleReleaseChange} value={projectRelease} placeholder={"Project release"}/>
+            <DateInput onChange={handleReleaseChange} value={projectRelease} placeholder={"Project release"}/>
             <input type="file" onChange={handleFileChange}/>
-            <br/>
             <ActionButton text="Add project" />
             <CancelButton className={"cancel"} text="Cancel" type="button" onClick={handleCancel}/>
         </form>

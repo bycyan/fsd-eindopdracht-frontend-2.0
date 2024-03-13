@@ -107,3 +107,8 @@
     width: 570px;
 }
 
+.songItem:hover{
+    cursor: pointer;
+    color: var(--secondary-color);
+}
+

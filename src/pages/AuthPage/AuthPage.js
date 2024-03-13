@@ -12,7 +12,6 @@ export default function AuthPage(){
     return (
         <main>
             <FormContainer onSubmit={handleLogin} />
-            {/*<RegisterContainer />*/}
         </main>
     );
 }

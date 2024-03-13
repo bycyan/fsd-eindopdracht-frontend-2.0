@@ -38,6 +38,24 @@ export const getUser = async (userId, token) => {
     }
 };
 
+export const getPublicUser = async (userId, token) => {
+    console.log(userId, token)
+    try {
+        const response = await axios.get(`${BASE_URL}user/public/${userId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error:", error);
+        return null;
+    }
+};
+
+
+
 export const getAllUsers = async (token) => {
     try {
         const response = await axios.get(`${BASE_URL}/user/users`, {
@@ -186,15 +204,16 @@ export const getContributors = async (projectId, token) => {
 
 export const putContributorsToProject = async (projectId, userId, token, formData) => {
     console.log("api ids: ", projectId, userId)
-    console.log("api ids: ", formData)
+    console.log("project: ", formData)
+    console.log("token: ", token)
     try {
-        const response = await axios.put(`${BASE_URL}project/contributor/${projectId}/${userId}`, formData, {
+        const projectData = formData[0];
+        return await axios.put(`${BASE_URL}/project/contributor/${projectId}/${userId}`, projectData, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             }
         });
-        return response;
     } catch (error) {
         console.error("Error:", error);
         return null;

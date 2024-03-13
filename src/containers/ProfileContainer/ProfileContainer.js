@@ -34,7 +34,7 @@ const ProfileContainer = () => {
             try {
                 const formData = new FormData();
                 formData.append('file', file);
-                const userId = 1;
+                const userId = 1; //todo: maak dynamisch
                 await uploadProfileImage(localStorage.getItem('token'), userId, formData);
                 window.location.reload();
             } catch (error) {

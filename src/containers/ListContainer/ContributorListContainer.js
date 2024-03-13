@@ -19,8 +19,6 @@ const ContributorListContainer = ({ projectId, addContributorModal}) => {
         fetchContributors();
     }, [projectId]);
 
-    console.log(contributorsOfProject)
-
     return (
         <div className={styles.content}>
             <h3>Contributors</h3>

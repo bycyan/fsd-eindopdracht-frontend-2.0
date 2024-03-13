@@ -7,7 +7,6 @@ import "./styles/Reset.css";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import MainNavComponent from "./componenets/NavComponents/MainNavComponent/MainNavComponent";
-import RegisterContainer from "./containers/FormContainer/RegisterContainer";
 
 function App() {
     const location = useLocation();

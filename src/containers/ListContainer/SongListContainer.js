@@ -1,5 +1,5 @@
 import styles from "./ListContainer.module.css"
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
 import {getSongFile, getSongs} from "../../services/userApi";
 
@@ -7,7 +7,8 @@ const SongListContainer = ({ projectId, addSongModal}) => {
     const [songsOfProject, setSongsOfProject] = useState([]);
     const [currentSong, setCurrentSong] = useState(null);
     const projectSongs = songsOfProject ? songsOfProject.sort((a, b) => b.songId - a.songId) : [];
-    const [testSong, setTestSong] = useState(null);
+    const audioRef = useRef(null);
+
 
     useEffect(() => {
         const fetchSongs = async () => {
@@ -19,49 +20,7 @@ const SongListContainer = ({ projectId, addSongModal}) => {
             }
         };
         fetchSongs();
-
-        // (async () => {
-        //     const testSongData = await getSongFile("1", localStorage.getItem("token"));
-        //     setTestSong(testSongData);
-        //     console.log(testSong)
-        // })();
     }, [projectId]);
-
-    // const handleClick = async (songId) => {
-    //     if (songId) {
-    //         try {
-    //             const songFileResponse = await getSongFile(songId, localStorage.getItem("token"));
-    //             // const arrayBuffer = await songFileResponse.arrayBuffer();
-    //             console.log("songFileResponse: ", songFileResponse);
-    //             if (songFileResponse && songFileResponse.data) {
-    //                 setCurrentSong(URL.createObjectURL(new Blob([songFileResponse.data], {type: 'audio/mp3'})));
-    //                 console.log("Audio data:", songFileResponse.data);
-    //                 const contentType = songFileResponse.headers['content-type'];
-    //                 console.log("Content-Type:", contentType);
-    //
-    //
-    //                 const blobObject = new Blob([songFileResponse.data], { type: 'audio/mp3' });
-    //                 // console.log("Blob Object:", blobObject);
-    //                 // console.log("Blob Data:", blobObject.data);
-    //                 // console.log("Blob Data Length:", blobObject.data.length);
-    //                 // console.log("Blob Data (Sample):", blobObject.data.slice(0, 100));
-    //                 const arrayBuffer = await blobObject.arrayBuffer();
-    //                 console.log("Blob Data (ArrayBuffer):", arrayBuffer);
-    //                 const text = await blobObject.text();
-    //                 console.log("Blob Data (Text):", text);
-    //
-    //                 // const dataArray = new Uint8Array(arrayBuffer);
-    //                 // console.log("Audio data (sample):", dataArray.slice(0, 100)); // Log first 100 bytes
-    //
-    //             } else {
-    //                 console.error("No audio file data found");
-    //             }
-    //             console.log("Song: ", songFileResponse, currentSong)
-    //         } catch (error) {
-    //             console.error("Error fetching song:", error);
-    //         }
-    //     }
-    // }
 
     const handleClick = async (songId) => {
         if (songId) {
@@ -69,7 +28,7 @@ const SongListContainer = ({ projectId, addSongModal}) => {
                 const songFileResponse = await getSongFile(songId, localStorage.getItem("token"));
                 if (songFileResponse && songFileResponse.data) {
                     const blobObject = new Blob([songFileResponse.data], { type: 'audio/mp3' });
-                    const arrayBuffer = URL.createObjectURL(blobObject)
+                    const arrayBuffer = URL.createObjectURL(blobObject);
                     setCurrentSong(arrayBuffer);
                 } else {
                     console.error("No audio file data found");
@@ -79,7 +38,6 @@ const SongListContainer = ({ projectId, addSongModal}) => {
             }
         }
     }
-
 
     return (
         <>
@@ -94,7 +52,7 @@ const SongListContainer = ({ projectId, addSongModal}) => {
                                 key={song.songId}
                                 onClick={() => handleClick(song.songId)}
                             >
-                                <h4>{song.songName}</h4>
+                                <h4 className={styles.songItem}>{song.songName}</h4>
 
                             </div>
                         ))}
@@ -110,9 +68,8 @@ const SongListContainer = ({ projectId, addSongModal}) => {
                     </div>
                 </div>
             </div>
-            {/*<audio id="audio-element" controls autoPlay src="http://localhost:8080/file/song/2" className={styles.audioElement}></audio>*/}
             {currentSong && (
-                <audio id="audio-element" controls autoPlay src={currentSong} className={styles.audioElement}></audio>
+                <audio ref={audioRef} id="audio-element" controls autoPlay src={currentSong} className={styles.audioElement}></audio>
             )}
         </>
     );

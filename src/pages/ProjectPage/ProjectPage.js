@@ -24,7 +24,6 @@ export default function ProjectPage() {
         const fetchProjectImage = async () => {
             if (matchedProject) {
                 const imageData = await getProjectImage(matchedProject.projectId, localStorage.getItem('token'));
-                console.log(imageData)
                 if (imageData) {
                     const blob = new Blob([imageData], { type: 'image/jpeg' });
                     const url = URL.createObjectURL(blob);
