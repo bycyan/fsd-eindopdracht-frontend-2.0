@@ -7,19 +7,22 @@ import SubmitButton from "../../ButtonComponents/SubmitButton/SubmitButton";
 import {useAuth} from "../../../context/AuthContext";
 import useUser from "../../UserComponent/UserComponent";
 import {LinkButton} from "../../ButtonComponents/LinkButton/LinkButton";
+import SearchContainer from "../../../containers/SearchContainer/SearchContainer";
 
 export default function MainNavComponent({ projectName }) {
     const currentUser = useUser();
     const { logout } = useAuth();
     const location = useLocation();
     const pathname = location.pathname;
-
-    // const getPageName = () => {
-    //     return pathname.replace(/^\//, '').replace(/\/$/, '').replace(/\//g, ' ');
-    // }
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         await logout();
+        navigate("/")
+    };
+
+    const goToProfile = () => {
+        navigate(`/profile`);
     };
 
     return (
@@ -27,7 +30,7 @@ export default function MainNavComponent({ projectName }) {
             <nav className="upper-nav-back">
 
                 {currentUser &&
-                    <LinkButton className={"nav-profile-link"} text={"Hey, " + currentUser.userFirstName + " " + currentUser.userLastName} href="/profile"/>
+                    <LinkButton className={"nav-profile-link"} text={"Hey, " + currentUser.userFirstName + " " + currentUser.userLastName} href="/profile" onClick={() => goToProfile()}/>
                 }
                     <div className={styles.bttnGroup}>
                         <SubmitButton

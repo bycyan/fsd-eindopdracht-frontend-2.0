@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import { getContributors } from "../../services/userApi";
 import { LinkButton } from "../../componenets/ButtonComponents/LinkButton/LinkButton";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
+import {useNavigate} from "react-router-dom";
 
 const ContributorListContainer = ({ projectId, addContributorModal}) => {
     const [contributorsOfProject, setContributorsOfProject] = useState([]);
+    const navigate = useNavigate(); // Initialize the useNavigate hook
 
     useEffect(() => {
         const fetchContributors = async () => {
@@ -19,6 +21,12 @@ const ContributorListContainer = ({ projectId, addContributorModal}) => {
         fetchContributors();
     }, [projectId]);
 
+
+    const goToUserProfile = (userId) => {
+        console.log("Navigating to user profile:", userId);
+        navigate(`/user/${userId}`);
+    };
+
     return (
         <div className={styles.content}>
             <h3>Contributors</h3>
@@ -28,7 +36,7 @@ const ContributorListContainer = ({ projectId, addContributorModal}) => {
                         <div key={contributor.id} className={styles.contributorContainer}>
                             <div>
                                 <h5>{contributor.firstName} {contributor.lastName}</h5>
-                                <LinkButton text="Go to profile" href={`user/${contributor.id}`} />
+                                <LinkButton text="Go to profile" href={`user/${contributor.id}`} onClick={() => goToUserProfile(contributor.id)} />
                             </div>
                             <h5>{contributor.jobDescription}</h5>
                         </div>

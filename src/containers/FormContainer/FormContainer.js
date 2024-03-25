@@ -62,8 +62,7 @@ const FormContainer = ({ onSubmit }) => {
                 <LinkButton text="Forgot Password?" href="#"/>
             </div>
             <button>login</button>
-            {/*<SubmitButton text="Login" onClick={handleLogin}/>*/}
-            <div className={styles.auth_switch}><h6 >Don't have an account? </h6> <LinkButton text="Register" href="/register/*"/></div>
+            <div className={styles.auth_switch}><h6 >Don't have an account? </h6> <LinkButton text="Register" href="/register"/></div>
         </form>
     );
 };

@@ -5,16 +5,16 @@ import TextInput from "../../componenets/InputFieldComponents/TextInput/TextInpu
 import RegisterContainer from "../../containers/FormContainer/RegisterContainer";
 
 
-export default function AuthPage(){
-    const [loggedIn, setLoggedIn] = useState(false);
+export default function RegisterPage(){
+    const [registered, setRegister] = useState(false);
 
-    const handleLogin = () => {
-        setLoggedIn(true);
+    const handleRegister = () => {
+        setRegister(true);
     };
 
     return (
         <main>
-            <FormContainer onSubmit={handleLogin}/>
+            <RegisterContainer onSubmit={handleRegister}/>
         </main>
     );
 }
