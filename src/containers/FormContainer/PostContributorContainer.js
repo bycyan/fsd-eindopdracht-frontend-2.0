@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./FormContainer.module.css";
-import {getAllUsers, putContributorsToProject} from "../../services/userApi";
+import {getAllUsers, putContributorsToProject} from "../../services/api";
 import TextInput from '../../componenets/InputFieldComponents/TextInput/TextInput'
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
 import CancelButton from "../../componenets/ButtonComponents/CancelButton/CancelButton";

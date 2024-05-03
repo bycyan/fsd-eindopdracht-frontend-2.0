@@ -7,7 +7,6 @@ import SubmitButton from "../../ButtonComponents/SubmitButton/SubmitButton";
 import {useAuth} from "../../../context/AuthContext";
 import useUser from "../../UserComponent/UserComponent";
 import {LinkButton} from "../../ButtonComponents/LinkButton/LinkButton";
-import SearchContainer from "../../../containers/SearchContainer/SearchContainer";
 
 export default function MainNavComponent({ projectName }) {
     const currentUser = useUser();

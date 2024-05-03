@@ -4,7 +4,7 @@ import header_dummy from "../../assets/header-img.jpeg";
 import profile_dummy from "../../assets/profile-dummy.jpg";
 import styles from "./ProfileContainer.module.css";
 import useUser from "../../componenets/UserComponent/UserComponent";
-import { getProfileImage, uploadProfileImage } from "../../services/userApi";
+import { getProfileImage, uploadProfileImage } from "../../services/api";
 
 const ProfileContainer = ( currentUser ) => {
     const [profileImageUrl, setProfileImageUrl] = useState(null);
@@ -48,7 +48,7 @@ const ProfileContainer = ( currentUser ) => {
                     <div>
                         <ImageComponent
                             src={header_dummy}
-                            alt="logo"
+                            alt="header"
                             className="profile-header"
                         />
                     </div>

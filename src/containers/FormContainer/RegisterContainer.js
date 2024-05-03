@@ -1,18 +1,14 @@
 import React, {useState} from 'react';
 import PasswordInput from '../../componenets/InputFieldComponents/PasswordInput/PasswordInput';
 import EmailInput from '../../componenets/InputFieldComponents/EmailInput/EmailInput';
-import SubmitButton from '../../componenets/ButtonComponents/SubmitButton/SubmitButton';
 import styles from "./FormContainer.module.css";
-import {CheckboxInput} from "../../componenets/InputFieldComponents/CheckboxInput/CheckboxInput";
 import {LinkButton} from "../../componenets/ButtonComponents/LinkButton/LinkButton";
-import {loginUser, registerUser} from "../../services/userApi";
-import { useAuth } from '../../context/AuthContext';
+import { registerUser } from "../../services/api";
 import {useNavigate} from "react-router-dom";
 import TextInput from "../../componenets/InputFieldComponents/TextInput/TextInput";
 
 const RegisterContainer = ({ onSubmit }) => {
     const navigate = useNavigate();
-    // const { login } = useAuth();
     const [userEmail, setEmail] = useState('');
     const [userPassword, setPassword] = useState('');
     const [userFirstName, setFirstName] = useState('');
@@ -64,7 +60,7 @@ const RegisterContainer = ({ onSubmit }) => {
             <EmailInput onChange={handleEmailChange} value={userEmail}/>
             <PasswordInput onChange={handlePasswordChange} value={userPassword} />
             <button>Register</button>
-            <div className={styles.auth_switch}><h6 >Already have an account? </h6> <LinkButton text="Login" href="/register/*"/></div>
+            <div className={styles.auth_switch}><h6 >Already have an account? </h6> <a href="/"> Login </a> </div>
         </form>
     );
 };

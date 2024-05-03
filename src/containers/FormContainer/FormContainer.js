@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import PasswordInput from '../../componenets/InputFieldComponents/PasswordInput/PasswordInput';
 import EmailInput from '../../componenets/InputFieldComponents/EmailInput/EmailInput';
-import SubmitButton from '../../componenets/ButtonComponents/SubmitButton/SubmitButton';
 import styles from "./FormContainer.module.css";
 import {CheckboxInput} from "../../componenets/InputFieldComponents/CheckboxInput/CheckboxInput";
 import {LinkButton} from "../../componenets/ButtonComponents/LinkButton/LinkButton";
-import { loginUser } from "../../services/userApi";
+import { loginUser } from "../../services/api";
 import { useAuth } from '../../context/AuthContext';
 import {useNavigate} from "react-router-dom";
 import {pem as jwt} from "node-forge";
@@ -42,7 +41,7 @@ const FormContainer = ({ onSubmit }) => {
 
                 const decodedToken = jwt.decode(response.data.jwt);
                 console.log(decodedToken)
-                const user_id = decodedToken.payload.sub; // Assuming user ID is stored in the 'sub' claim
+                const user_id = decodedToken.payload.sub;
                 console.log(user_id)
 
             } else {
@@ -62,7 +61,7 @@ const FormContainer = ({ onSubmit }) => {
                 <LinkButton text="Forgot Password?" href="#"/>
             </div>
             <button>login</button>
-            <div className={styles.auth_switch}><h6 >Don't have an account? </h6> <LinkButton text="Register" href="/register"/></div>
+            <div className={styles.auth_switch}><h6 >Don't have an account? </h6> <a href="/register"> Register </a> </div>
         </form>
     );
 };

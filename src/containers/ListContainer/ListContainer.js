@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { getProjectImage } from "../../services/userApi";
+import { getProjectImage } from "../../services/api";
 import { ImageComponent } from "../../componenets/PageComponents/ImageComponent/ImageComponent";
 import useProject from "../../componenets/ProjectListComponent/ProjectListComponent";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
@@ -11,31 +11,31 @@ const ListContainer = ({ onAddProjectClick }) => {
     const sortedProjects = currentProject ? [...currentProject].sort((a, b) => b.projectId - a.projectId) : [];
     const [projectImages, setProjectImages] = useState({});
 
-    useEffect(() => {
-        const fetchProjectImages = async () => {
-            const images = {};
-            for (const project of sortedProjects) {
-                if (project) {
-                    const imageData = await getProjectImage(project.projectId, localStorage.getItem('token'));
-                    if (imageData) {
-                        const blob = new Blob([imageData], { type: 'image/jpeg' });
-                        const url = URL.createObjectURL(blob);
-                        images[project.projectId] = url;
-                    }
+    const fetchProjectImages = useCallback(async () => {
+        const images = {};
+        for (const project of sortedProjects) {
+            if (project) {
+                const imageData = await getProjectImage(project.projectId, localStorage.getItem('token'));
+                if (imageData) {
+                    const blob = new Blob([imageData], { type: 'image/jpeg' });
+                    const url = URL.createObjectURL(blob);
+                    images[project.projectId] = url;
                 }
             }
+        }
 
-            // Update projectImages state only if there are new images
-            if (Object.keys(images).length > 0) {
-                setProjectImages(prevState => ({
-                    ...prevState,
-                    ...images
-                }));
-            }
-        };
+        // Update projectImages state only if there are new images
+        if (Object.keys(images).length > 0) {
+            setProjectImages(prevState => ({
+                ...prevState,
+                ...images
+            }));
+        }
+    }, [sortedProjects]);
 
+    useEffect(() => {
         fetchProjectImages();
-    }, [sortedProjects]); // Dependency array includes sortedProjects
+    }, [fetchProjectImages]);
 
     // Cleanup function to revoke object URLs
     useEffect(() => {

@@ -1,6 +1,6 @@
 import styles from "./ListContainer.module.css"
 import React, { useEffect, useState } from "react";
-import { getContributors } from "../../services/userApi";
+import { getContributors } from "../../services/api";
 import { LinkButton } from "../../componenets/ButtonComponents/LinkButton/LinkButton";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
 import {useNavigate} from "react-router-dom";

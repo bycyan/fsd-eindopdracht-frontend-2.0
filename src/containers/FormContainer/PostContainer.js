@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./FormContainer.module.css";
-import {loginUser, postProject, postProjectImage, uploadProfileImage} from "../../services/userApi";
+import {loginUser, postProject, postProjectImage, uploadProfileImage} from "../../services/api";
 import useUser from "../../componenets/UserComponent/UserComponent";
 import TextInput from '../../componenets/InputFieldComponents/TextInput/TextInput'
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
@@ -28,7 +28,7 @@ const FormContainer = ({ onCancel }) => {
         setProjectArtist(event.target.value);
     };
     const handleReleaseChange = (year) => {
-        setProjectRelease(year); // Set projectRelease to the selected year
+        setProjectRelease(year);
     };
 
     const handleFileChange = async (event) => {
@@ -65,7 +65,7 @@ const FormContainer = ({ onCancel }) => {
             if (projectCoverImage) {
                 const response = await postProject(currentUser.userId, localStorage.getItem('token'), project);
                 if (response) {
-                    await postProjectImage(response.projectId, localStorage.getItem('token'), projectCoverImage); // Use projectCoverImage directly
+                    await postProjectImage(response.projectId, localStorage.getItem('token'), projectCoverImage);
                     navigate(`/project/${response.projectId}`);
                 }
             } else {

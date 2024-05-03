@@ -3,7 +3,7 @@ import { ImageComponent } from "../../componenets/PageComponents/ImageComponent/
 import header_dummy from "../../assets/header-img.jpeg";
 import profile_dummy from "../../assets/profile-dummy.jpg";
 import styles from "./ProfileContainer.module.css";
-import {getProfileImage, getUser, uploadProfileImage} from "../../services/userApi";
+import {getProfileImage, getUser, uploadProfileImage} from "../../services/api";
 import {useParams} from "react-router-dom";
 
 const ProfileContainer = ( ) => {

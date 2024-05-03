@@ -1,7 +1,7 @@
 import styles from "./ListContainer.module.css"
 import React, {useEffect, useRef, useState} from "react";
 import ActionButton from "../../componenets/ButtonComponents/ActionButton/ActionButton";
-import {getSongFile, getSongs} from "../../services/userApi";
+import {getSongFile, getSongs} from "../../services/api";
 
 const SongListContainer = ({ projectId, addSongModal}) => {
     const [songsOfProject, setSongsOfProject] = useState([]);

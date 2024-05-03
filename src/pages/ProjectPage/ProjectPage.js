@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useProject from "../../componenets/ProjectListComponent/ProjectListComponent";
 import { ImageComponent } from "../../componenets/PageComponents/ImageComponent/ImageComponent";
-// import project_img from "../../assets/project-img.jpeg";
 import styles from './ProjectPage.module.css'
 import SongListContainer from "../../containers/ListContainer/SongListContainer";
 import ContributorListContainer from "../../containers/ListContainer/ContributorListContainer";
 import PostSongContainer from "../../containers/FormContainer/PostSongContainer";
 import PostContributorContainer from "../../containers/FormContainer/PostContributorContainer";
-import {getProfileImage, getProjectImage} from "../../services/userApi";
-// import profile_dummy from "../../assets/profile-dummy.jpg"; // Import the contributor form container
+import {getProfileImage, getProjectImage} from "../../services/api";
 
 export default function ProjectPage() {
     const [isWindowOpen, setIsWindowOpen] = useState(false);
@@ -40,12 +38,12 @@ export default function ProjectPage() {
     }
 
     const handleAddContributorModal = () => {
-        setIsContributorWindowOpen(true); // Function to open contributor window
+        setIsContributorWindowOpen(true);
     }
 
     const handleCancel = () => {
         setIsWindowOpen(false);
-        setIsContributorWindowOpen(false); // Function to close both windows
+        setIsContributorWindowOpen(false);
     };
 
     if (!currentProject) {
