@@ -1,0 +1,15 @@
+nav{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    margin-bottom: var(--spacing-small);
+    padding: 20px 90px;
+}
+
+.bttnGroup{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
